@@ -61,7 +61,7 @@ public class InstallCert {
             String p = (args.length == 1) ? "changeit" : args[1];
             passphrase = p.toCharArray();
         } else {
-            System.out.println("Usage: java InstallCert [:port] [passphrase]");
+            System.out.println("Usage: java InstallCert <host>[:port] [passphrase]");
             return;
         }
 
