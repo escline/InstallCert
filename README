@@ -10,8 +10,11 @@ Usage:
 Need to compile, first:
 javac InstallCert.java
 
+Note: since java 11, you can run it directly without compiling it first:
+java --source 11 InstallCert.java <args>
+
 # Access server, and retrieve certificate (accept default certificate 1)
-java InstallCert [host]:[port]
+java InstallCert [--proxy=proxyHost:proxyPort] <host>[:port] [passphrase]
 
 # Extract certificate from created jssecacerts keystore
 keytool -exportcert -alias [host]-1 -keystore jssecacerts -storepass changeit -file [host].cer
