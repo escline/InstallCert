@@ -76,7 +76,7 @@ public class InstallCert {
                 useProxy = true;
                 String[] c = proxy.split(":");
                 proxyHost = c[0];
-                proxyPort = Integer.parseInt(c[1]);  // poxy port is mandatory (we don't default to 8080)
+                proxyPort = Integer.parseInt(c[1]);  // proxy port is mandatory (we don't default to 8080)
             }
             else if (host == null) {  // 1st argument is the "host:port"
                 String[] c = arg.split(":");
