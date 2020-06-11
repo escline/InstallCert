@@ -183,7 +183,6 @@ public class InstallCert {
         int k;
         if (isQuiet) {
             System.out.println("Adding first certificate to trusted keystore");
-            k = 0;
         }
         else {
             System.out.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
