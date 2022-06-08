@@ -10,7 +10,7 @@ Need to compile, first:
 javac InstallCert.java
 ```
 
->**Note** since java 11, you can run it directly without compiling it first:
+>**Note** since Java 11, you can run it directly without compiling it first:
 
 ```
 java --source 11 InstallCert.java <args>
@@ -32,6 +32,13 @@ keytool -exportcert -alias [host]-1 -keystore jssecacerts -storepass changeit -f
 
 
 ### Import certificate into system keystore
+
+```
+sudo keytool -importcert -alias [host] -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -file [host].cer
+```
+
+>**Note** since Java 11, you can use the `-cacerts` flag instead of `-keystore [cacerts path]`
+
 
 ```
 sudo keytool -importcert -alias [host] -cacerts -storepass changeit -file [host].cer
