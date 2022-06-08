@@ -34,11 +34,12 @@ keytool -exportcert -alias [host]-1 -keystore jssecacerts -storepass changeit -f
 ### Import certificate into system keystore
 
 ```
-sudo keytool -importcert -alias [host] -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -file [host].cer
+sudo keytool -importcert -alias [host] -keystore [path to system cacerts] -storepass changeit -file [host].cer
 ```
 
->**Note** since Java 11, you can use the `-cacerts` flag instead of `-keystore [cacerts path]`
+Hint: `keystore` system cacerts path should be located in `$JAVA_HOME/lib/security/cacerts` if your `$JAVA_HOME` env var is set.
 
+>**Note** since Java 11, you can use the `-cacerts` flag instead of `-keystore [cacerts path]`
 
 ```
 sudo keytool -importcert -alias [host] -cacerts -storepass changeit -file [host].cer
