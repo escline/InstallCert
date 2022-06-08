@@ -1,28 +1,54 @@
-InstallCert.java
+# InstallCert.java
 
-Java program written by Andreas Sterbenz, and posted on a blog in Oct, 2006:
-https://blogs.oracle.com/gc/entry/unable_to_find_valid_certification
+Java program written by Andreas Sterbenz and [posted on a blog in Oct, 2006](https://blogs.oracle.com/gc/entry/unable_to_find_valid_certification). Link to Java program in Andreas' blog no longer works, but [the source was linked in another blog](https://web.archive.org/web/20190831085142/http://nodsw.com/blog/leeland/2006/12/06-no-more-unable-find-valid-certification-path-requested-target).
 
-Link to Java program in Andreas' blog no longer works, but the source was linked in another blog:
-https://web.archive.org/web/20190831085142/http://nodsw.com/blog/leeland/2006/12/06-no-more-unable-find-valid-certification-path-requested-target
 
-Usage:
+## Usage
+
 Need to compile, first:
+```
 javac InstallCert.java
+```
 
-Note: since java 11, you can run it directly without compiling it first:
+>**Note** since Java 11, you can run it directly without compiling it first:
+
+```
 java --source 11 InstallCert.java <args>
+```
 
-# Access server, and retrieve certificate (accept default certificate 1)
+
+### Access server, and retrieve certificate (accept default certificate 1)
+
+```
 java InstallCert [--proxy=proxyHost:proxyPort] <host>[:port] [passphrase]
+```
 
-# Extract certificate from created jssecacerts keystore
+
+### Extract certificate from created jssecacerts keystore
+
+```
 keytool -exportcert -alias [host]-1 -keystore jssecacerts -storepass changeit -file [host].cer
+```
 
-# Import certificate into system keystore
-keytool -importcert -alias [host] -keystore [path to system keystore] -storepass changeit -file [host].cer
 
-# Example:
+### Import certificate into system keystore
+
+```
+sudo keytool -importcert -alias [host] -keystore [path to system cacerts] -storepass changeit -file [host].cer
+```
+
+Hint: `keystore` system cacerts path should be located in `$JAVA_HOME/lib/security/cacerts` if your `$JAVA_HOME` env var is set.
+
+>**Note** since Java 11, you can use the `-cacerts` flag instead of `-keystore [cacerts path]`
+
+```
+sudo keytool -importcert -alias [host] -cacerts -storepass changeit -file [host].cer
+```
+
+
+#### Example
+
+```
 java InstallCert woot.com:443
 
     Loading KeyStore /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/security/cacerts...
@@ -58,7 +84,7 @@ keytool -exportcert -alias woot.com-1 -keystore jssecacerts -storepass changeit 
 
     Certificate stored in file <woot.com.cer>
   
-(sudo) keytool -importcert -alias woot.com -keystore /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/security/cacerts -storepass changeit -file woot.com.cer
+sudo keytool -importcert -alias woot.com -cacerts -storepass changeit -file woot.com.cer
 
     Owner: O=Woot Inc, C=US, ST=Texas, L=Carrollton, CN=*.woot.com
     Issuer: CN=SecureTrust CA, O=SecureTrust Corporation, C=US
@@ -70,3 +96,4 @@ keytool -exportcert -alias woot.com-1 -keystore jssecacerts -storepass changeit 
 yes
 
     Certificate was added to keystore
+```
